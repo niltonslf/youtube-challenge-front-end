@@ -24,16 +24,22 @@ const SearchBtn = styled.button`
   padding: 10px;
   background: white;
   cursor: pointer;
+  outline: none;
 `;
 
 const Input = ({ placeholder, icon, onClick }) => {
   const [value, setValue] = useState("");
+
+  function handleKeyPress(e) {
+    if (e.key === "Enter") onClick(value);
+  }
 
   return (
     <FormControl className="form-control">
       <InputBasic
         placeholder={placeholder}
         value={value}
+        onKeyPress={handleKeyPress}
         onChange={event => setValue(event.target.value)}
       />
       <SearchBtn onClick={() => onClick(value)}>
