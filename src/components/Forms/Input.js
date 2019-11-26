@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import "../../scss/_variables.scss";
 
 const FormControl = styled.div`
@@ -23,13 +24,15 @@ const SearchBtn = styled.button`
   background: white;
 `;
 
-const Input = ({ placeholder }) => {
+const Input = ({ placeholder, icon }) => {
   return (
     <FormControl className="form-control">
       <InputBasic placeholder={placeholder} />
-      <SearchBtn>Btn</SearchBtn>
+      <SearchBtn>
+        <i class="material-icons">{icon}</i>
+      </SearchBtn>
     </FormControl>
   );
 };
 
-export { Input };
+export default Input;
