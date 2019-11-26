@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import "../../scss/_variables.scss";
@@ -15,6 +15,7 @@ const InputBasic = styled.input`
   height: 40px;
   flex: 1;
   padding: 5px 15px;
+  outline: none;
 `;
 
 const SearchBtn = styled.button`
@@ -22,14 +23,21 @@ const SearchBtn = styled.button`
   border: 0;
   padding: 10px;
   background: white;
+  cursor: pointer;
 `;
 
-const Input = ({ placeholder, icon }) => {
+const Input = ({ placeholder, icon, onClick }) => {
+  const [value, setValue] = useState("");
+
   return (
     <FormControl className="form-control">
-      <InputBasic placeholder={placeholder} />
-      <SearchBtn>
-        <i class="material-icons">{icon}</i>
+      <InputBasic
+        placeholder={placeholder}
+        value={value}
+        onChange={event => setValue(event.target.value)}
+      />
+      <SearchBtn onClick={() => onClick(value)}>
+        <i className="material-icons">{icon}</i>
       </SearchBtn>
     </FormControl>
   );
