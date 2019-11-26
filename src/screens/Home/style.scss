@@ -7,12 +7,29 @@
   background: $light-gray;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 }
 
 .search-container {
-  background: red;
   width: 600px;
-  max-width: 90%;
+  max-width: 100%;
+
+  background: transparent;
+  padding: 20px 30px;
+
+  transform: translateY(calc(50vh - 20px));
+  transition: all 0.5s ease-in-out;
+
+  // Busca realizada
+  &.active {
+    transform: translateY(0);
+    background: white;
+    padding: 20px;
+  }
+}
+
+.body-container {
+  background: #333;
 }
