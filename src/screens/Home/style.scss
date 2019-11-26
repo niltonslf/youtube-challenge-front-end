@@ -5,4 +5,14 @@
   height: 100vh;
 
   background: $light-gray;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-container {
+  background: red;
+  width: 600px;
+  max-width: 90%;
 }
