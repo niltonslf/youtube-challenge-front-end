@@ -1,4 +1,4 @@
-.detail-container{}
+.detail-container {}
 
 .detail-header {
     height: 70px;
@@ -18,13 +18,22 @@
 .video {
     max-width: 100%;
     width: 960px;
+    padding: 15px;
     margin: 0 auto;
 }
 
-.video-frame{
+.video-frame {
     background: black;
-    width: 100%;
-    height: 400px;
+    min-width: 100%;
+    height: 500px;
+    transition: all 0.5s linear;
+
+    @media (max-width: 768px) {
+        margin-left: -15px;
+        margin-right: -15px;
+        height: 350px;
+    }
+
 
     iframe {
         width: 100%;
