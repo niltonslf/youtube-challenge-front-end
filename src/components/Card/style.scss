@@ -1,0 +1,43 @@
+@import "../../scss/variables";
+
+.card-container {
+    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.2);
+
+    padding: 0 15px 15px 15px;
+
+    header{
+        margin-left: -15px;
+        margin-right: -15px;
+
+        img {
+            height: 300px;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .card-body {
+        margin-top: 10px;
+
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+    }
+
+    footer {
+        margin-top: 10px;
+        a {
+            background: white;
+            padding: 10px 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            color: #333;
+        }
+    }
+}
