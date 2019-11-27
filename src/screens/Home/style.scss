@@ -44,3 +44,21 @@
   grid-auto-rows: auto;
   gap: 20px;
 }
+
+.no-result {
+  width: 100%;
+  
+  grid-column-end: 4;
+  grid-column-start: 1;
+
+  text-align: center;
+
+  img {
+    width: 100%;
+  }
+
+  p {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+}
