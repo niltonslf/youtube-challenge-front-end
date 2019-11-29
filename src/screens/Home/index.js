@@ -1,20 +1,24 @@
-import React, { useState } from "react";
-import "./style.scss";
+import React, { useState } from "react"
+import "./style.scss"
 
-import Input from "../../components/Forms/Input";
-import Card from "../../components/Card";
+import Input from "../../components/Forms/Input"
+import Card from "../../components/Card"
 
-import { search } from "../../mock";
+import YoutubeService from "../../services/YoutubeService"
+
+// import { search } from "../../mock"
 
 export default function Home() {
-  const [isSearch, setIsSearch] = useState(false);
-  const [result, setResult] = useState([]);
+  const [isSearch, setIsSearch] = useState(false)
+  const [result, setResult] = useState([])
 
+  // Disparar ações de busca
   function makeSearch(term) {
-    setIsSearch(true);
-    setTimeout(() => {
-      setResult(search);
-    }, 500);
+    setIsSearch(true)
+    setTimeout(async () => {
+      const results = await YoutubeService.fetchByTerm(term)
+      setResult(results)
+    }, 500)
   }
 
   return (
@@ -51,5 +55,5 @@ export default function Home() {
         )}
       </div>
     </div>
-  );
+  )
 }
