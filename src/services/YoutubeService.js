@@ -1,6 +1,6 @@
 import ApiService from "./ApiService"
-
 import VideoFactory from "./VideoFactory"
+
 const { axios } = ApiService()
 
 class YoutubeService {
@@ -22,15 +22,14 @@ class YoutubeService {
         key: this.key
       }
     })
+
     // guarda os itens retornados na busca
     const { items } = response.data
 
-    // faz um tratamento dos dados retornados do youtube
-    const parsedVideos = items
-      .map(item => VideoFactory(item))
-      .filter(item => !!item)
+    // trata os resultados do youtube
+    const videos = items.map(item => VideoFactory(item)).filter(item => !!item)
 
-    return parsedVideos
+    return videos
   }
 }
 export default new YoutubeService()
