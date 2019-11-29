@@ -15,21 +15,45 @@ class YoutubeService {
    * @returns {Array} videos
    */
   async fetchByTerm(term) {
+    const part = ["id", "snippet"]
+
     const response = await this.axios.get("/search", {
       params: {
-        part: "id,snippet",
+        part: part.join(","),
         q: term,
+        type: "video",
+        key: this.key
+      }
+    })
+    // guarda os itens retornados na busca
+    const { items } = response.data
+    // trata os resultados do youtube
+    const videos = items
+      .map(item => VideoFactory(item, part))
+      .filter(item => !!item)
+    return videos
+  }
+
+  /**
+   * Busca detalhes de um vídeo a partir do seu ID
+   * @param {String} id 
+   * @return {video}
+   */
+  async fetchVideoDetail(id) {
+    const part = ["id", "snippet", "statistics"]
+
+    const response = await this.axios.get("/videos", {
+      params: {
+        id,
+        part: part.join(","),
         key: this.key
       }
     })
 
-    // guarda os itens retornados na busca
     const { items } = response.data
+    const video = VideoFactory(items[0], part)
 
-    // trata os resultados do youtube
-    const videos = items.map(item => VideoFactory(item)).filter(item => !!item)
-
-    return videos
+    return video
   }
 }
 export default new YoutubeService()
