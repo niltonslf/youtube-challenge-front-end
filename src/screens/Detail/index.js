@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./style.scss";
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import "./style.scss"
+
+import YoutubeService from "../../services/YoutubeService"
 
 export default function Detail({ match }) {
-  const { params } = match;
-  useEffect(() => {
-    function fetchVideo(id) {
-      console.log(`find video #${id}`);
-    }
+  const { params } = match
+  const [video, setVideo] = useState({})
 
-    fetchVideo(params.id);
-  }, [params]);
+  useEffect(() => {
+    async function fetchVideo(id) {
+      const video = await YoutubeService.fetchVideoDetail(id)
+      setVideo(video)
+    }
+    fetchVideo(params.id)
+  }, [params])
 
   return (
     <section className="detail-container">
@@ -19,15 +23,16 @@ export default function Detail({ match }) {
           <i className="material-icons">arrow_back</i>
         </Link>
         <header className="header-body">
-          <h1>Título do vídeo 1</h1>
+          <h1>{video.title}</h1>
         </header>
       </div>
       <article className="video">
         <div className="video-frame">
           <iframe
+            title="title"
             width="560"
             height="400"
-            src="https://www.youtube.com/embed/jt9oRHFpZfs"
+            src={`https://www.youtube.com/embed/${params.id}`}
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -35,36 +40,30 @@ export default function Detail({ match }) {
         </div>
         <div className="video-body">
           <div className="video-header">
-            <h2>Nome do canal</h2>
+            <h2>{video.channel}</h2>
             <div className="video-statistics">
               <span>
                 <i className="material-icons">thumb_up</i>
-                9.999
+                {video.likes}
               </span>
               <span>
                 <i className="material-icons">thumb_down</i>
-                9.999
+                {video.dislikes}
               </span>
             </div>
           </div>
 
           <div className="video-description">
-            <p>
-              Laboris Lorem culpa id Lorem quis laborum tempor sint ad
-              incididunt cillum. Ea labore dolor fugiat irure minim qui.
-              Proident laborum sunt nisi consectetur elit ex elit Lorem velit
-              esse sit elit mollit. Mollit officia sint dolore fugiat est do
-              enim laborum fugiat adipisicing. Aute cillum dolor cupidatat non.
-            </p>
+            <p>{video.description}</p>
           </div>
         </div>
         <footer>
           <span className="footer-views">
             <i className="material-icons">remove_red_eye</i>
-            9.999
+            {video.views}
           </span>
         </footer>
       </article>
     </section>
-  );
+  )
 }
