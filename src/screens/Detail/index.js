@@ -53,9 +53,7 @@ export default function Detail({ match }) {
             </div>
           </div>
 
-          <div className="video-description">
-            <p>{video.description}</p>
-          </div>
+          <div className="video-description">{video.description}</div>
         </div>
         <footer>
           <span className="footer-views">
