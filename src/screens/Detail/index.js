@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import "./style.scss"
 
 import YoutubeService from "../../services/YoutubeService"
 
 export default function Detail({ match }) {
+  let history = useHistory()
   const { params } = match
   const [video, setVideo] = useState({})
-  
-  let isLoading = true
+  const [isLoading, setIsLoading] = useState(true)
+  const [leavePage, setLeavePage] = useState(false)
 
   useEffect(() => {
     async function fetchVideo(id) {
       const video = await YoutubeService.fetchVideoDetail(id)
       setVideo(video)
-      isLoading = false
+      setIsLoading(false)
     }
     fetchVideo(params.id)
   }, [params])
 
+  function handleLeavePage() {
+    setLeavePage(true)
+    setTimeout(() => {
+      history.push("/")
+    }, 500)
+  }
+
   return (
     <section
-      className={`detail-container ${isLoading ? "detail-animation" : ""}`}
+      className={`detail-container ${isLoading ? "detail-animation-enter" : ""}
+      ${leavePage ? "detail-animation-leave" : ""}
+      `}
     >
       <div className="detail-header">
-        <Link to="/" className="header-back-arrow">
+        <span className="header-back-arrow" onClick={handleLeavePage}>
           <i className="material-icons">arrow_back</i>
-        </Link>
+        </span>
         <header className="header-body">
           <h2 className="header-title">{video.title}</h2>
         </header>

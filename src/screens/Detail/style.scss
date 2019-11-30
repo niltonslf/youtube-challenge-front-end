@@ -2,12 +2,27 @@
 @import "../../scss/mixins";
 
 .detail-container {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+
+    background: white;
+    z-index: $level-3;
 }
 
-.detail-animation {
+.detail-animation-enter {
     animation-name: enter-page;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out ;
+    animation-iteration-count: 1;
+}
+
+.detail-animation-leave {
+    animation-name: leave-page;
+    animation-duration: 0.5s;
     animation-timing-function: ease-out ;
     animation-iteration-count: 1;
 }
@@ -15,11 +30,22 @@
 @keyframes enter-page {
     from {
         height: 0;
-         overflow: hidden;
-
+        top: 30vh;
     }
     to {
+        top: 0;
         height: 100vh;
+    }
+}
+
+@keyframes leave-page {
+    from {
+        top: 0;
+        height: 100vh;
+    }
+    to {
+        top: 50vh;
+        height: 0;
     }
 }
 
