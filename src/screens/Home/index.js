@@ -6,8 +6,6 @@ import Card from "../../components/Card"
 
 import YoutubeService from "../../services/YoutubeService"
 
-// import { search } from "../../mock"
-
 export default function Home() {
   const [isSearch, setIsSearch] = useState(false)
   const [result, setResult] = useState([])
