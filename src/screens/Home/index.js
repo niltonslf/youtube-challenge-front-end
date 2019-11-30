@@ -22,9 +22,11 @@ export default function Home() {
   return (
     <div className="home-container">
       <div className={`search-container ${isSearch ? "active" : ""}`}>
+        <h1 className="logo">Vearch</h1>
         <Input
           placeholder="Pesquisar"
           icon="search"
+          className="search-input"
           onClick={value => makeSearch(value)}
         />
       </div>
