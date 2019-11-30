@@ -5,6 +5,25 @@
     position: relative;
 }
 
+.detail-animation {
+    animation-name: enter-page;
+    animation-duration: 1s;
+    animation-timing-function: ease-out ;
+    animation-iteration-count: 1;
+}
+
+@keyframes enter-page {
+    from {
+        height: 0;
+         overflow: hidden;
+
+    }
+    to {
+        height: 100vh;
+    }
+}
+
+
 .detail-header {
     height: 70px;
     background: $primary;

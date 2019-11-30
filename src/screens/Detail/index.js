@@ -7,17 +7,22 @@ import YoutubeService from "../../services/YoutubeService"
 export default function Detail({ match }) {
   const { params } = match
   const [video, setVideo] = useState({})
+  
+  let isLoading = true
 
   useEffect(() => {
     async function fetchVideo(id) {
       const video = await YoutubeService.fetchVideoDetail(id)
       setVideo(video)
+      isLoading = false
     }
     fetchVideo(params.id)
   }, [params])
 
   return (
-    <section className="detail-container">
+    <section
+      className={`detail-container ${isLoading ? "detail-animation" : ""}`}
+    >
       <div className="detail-header">
         <Link to="/" className="header-back-arrow">
           <i className="material-icons">arrow_back</i>
