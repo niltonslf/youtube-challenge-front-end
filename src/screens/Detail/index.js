@@ -19,11 +19,11 @@ export default function Detail({ match }) {
   return (
     <section className="detail-container">
       <div className="detail-header">
-        <Link to="/">
+        <Link to="/" className="header-back-arrow">
           <i className="material-icons">arrow_back</i>
         </Link>
         <header className="header-body">
-          <h1>{video.title}</h1>
+          <h2 className="header-title">{video.title}</h2>
         </header>
       </div>
       <article className="video">
