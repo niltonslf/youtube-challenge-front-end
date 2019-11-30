@@ -1,4 +1,5 @@
 @import "../../scss/variables";
+@import "../../scss/mixins";
 
 .home-container {
   width: 100%;
@@ -28,7 +29,7 @@
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
 
-  box-shadow: 3px 3px 4px 0 rgba(0,0,0,0.4);
+  @include shadow();
 
   transition: all 0.5s ease-in-out;
 
