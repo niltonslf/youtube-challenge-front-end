@@ -4,7 +4,7 @@ import styled from "styled-components"
 import "../../scss/_variables.scss"
 
 const FormControl = styled.div`
-  border: 2px solid #666;
+  border: 1px solid #666;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -30,19 +30,35 @@ const SearchBtn = styled.button`
 `
 
 const Input = ({ placeholder, icon, onClick, className }) => {
+  const [isValidated, setIsValidated] = useState(false)
+
   const [value, setValue] = useState("")
 
   function handleKeyPress(e) {
-    if (e.key === "Enter") onClick(value)
+    if (value) {
+      if (e.key === "Enter") onClick(value)
+    }
   }
 
   return (
-    <FormControl className={`form-control ${className}`}>
+    <FormControl
+      className={`form-control ${className}`}
+      style={
+        !isValidated
+          ? {
+              borderColor: "red"
+            }
+          : {}
+      }
+    >
       <InputBasic
         placeholder={placeholder}
         value={value}
         onKeyPress={handleKeyPress}
-        onChange={event => setValue(event.target.value)}
+        onChange={event => {
+          setValue(event.target.value)
+          setIsValidated(event.target.value ? true : false)
+        }}
       />
       <SearchBtn onClick={() => onClick(value)}>
         <i className="material-icons">{icon}</i>
