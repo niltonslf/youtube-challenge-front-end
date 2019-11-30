@@ -52,9 +52,8 @@
 
     transition: box-shadow 0.2s ease-in;
 
-    &:hover {
-        @include shadow();
-
+    &:hover{
+        @include shadow(0px,0px,0px);
     }
 
 }
