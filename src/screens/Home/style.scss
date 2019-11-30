@@ -99,8 +99,8 @@
 .no-result {
   width: 100%;
   
-  grid-column-end: 4;
-  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-column-start: 2;
 
   text-align: center;
 
@@ -109,7 +109,7 @@
   }
 
   p {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 15px;
   }
 }
