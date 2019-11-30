@@ -11,12 +11,10 @@ export default function Home() {
   const [result, setResult] = useState([])
 
   // Disparar ações de busca
-  function makeSearch(term) {
+  async function makeSearch(term) {
+    const results = await YoutubeService.fetchByTerm(term)
+    setResult(results)
     setIsSearch(true)
-    setTimeout(async () => {
-      const results = await YoutubeService.fetchByTerm(term)
-      setResult(results)
-    }, 500)
   }
 
   return (
