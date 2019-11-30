@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
-import "./style.scss";
+import "./style.scss"
 
 export default function Card({ title, children, image, channel, id }) {
   return (
@@ -15,8 +15,10 @@ export default function Card({ title, children, image, channel, id }) {
         <p>{children}</p>
       </div>
       <footer>
-        <Link to={`/video/${id}`}>Detalhes do vídeo</Link>
+        <Link to={`/video/${id}`} className="btn-default">
+          Detalhes do vídeo
+        </Link>
       </footer>
     </article>
-  );
+  )
 }
