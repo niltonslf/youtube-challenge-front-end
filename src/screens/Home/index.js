@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./style.scss"
 
-import { Route, Link } from "react-router-dom"
+import { Route } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
@@ -13,22 +13,58 @@ import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
   const [isSearch, setIsSearch] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [searchResult, setSearchResult] = useState([])
   const [videos, setVideos] = useState([])
 
-  // Disparar ações de busca
+  useEffect(() => {
+    if (searchResult) {
+      setVideos([...videos, ...searchResult])
+    } else {
+      setVideos(null)
+    }
+    setIsLoading(false)
+  }, [searchResult]) // eslint-disable-line
+
+  // Disparar ação de busca
   async function makeSearch(term) {
+    setIsLoading(true)
     const results = await YoutubeService.fetchByTerm(term)
-    setVideos(results)
+
+    if (results) {
+      const { videos } = results
+      setSearchResult(videos)
+      setIsSearch(true)
+      return
+    }
+    // console.log("erro")
+    setSearchResult(null)
     setIsSearch(true)
   }
 
-  function fetchData() {
-    console.log("LOAD MORE!!!!")
+  function listenPageScroll(event) {
+    const homeContainer = event.target
+    const homeHeight = homeContainer.scrollHeight
+
+    homeContainer.addEventListener("scroll", () => {
+      const posY = homeContainer.scrollTop
+      const scrollHeight = homeContainer.clientHeight
+      const scrollBottomPos = posY + scrollHeight
+
+      console.log("listener", { isLoading })
+
+      if (!isLoading) {
+        if (scrollBottomPos >= homeHeight) {
+          console.log("load more")
+          makeSearch("violão")
+        }
+      }
+    })
   }
 
   return (
     <>
-      <div className="home-container">
+      <div className="home-container" onScroll={listenPageScroll}>
         <div className={`search-container ${isSearch ? "active" : ""}`}>
           <h1 className="logo">Vearch</h1>
           <Input
@@ -39,13 +75,6 @@ export default function Home({ match }) {
           />
         </div>
         <div className="body-container">
-          <InfiniteScroll
-            dataLength={videos.length}
-            next={fetchData}
-            hasMore={true}
-            loader={<div>Loading...</div>}
-            endMessage={<p>You have seen it all</p>}
-          ></InfiniteScroll>
           {videos &&
             videos.map((item, index) => (
               <Card
