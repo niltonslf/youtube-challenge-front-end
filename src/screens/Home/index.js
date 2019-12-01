@@ -1,41 +1,85 @@
-import React, { useState } from "react"
+/* eslint-disable */
+import React, { useState, useEffect } from "react"
 import "./style.scss"
 
-import { Route, Link } from "react-router-dom"
+import { Route } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
-
 import Detail from "../Detail"
+
+import img404 from "../../assets/404.gif"
 
 import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
-  const [isSearch, setIsSearch] = useState(false)
-  const [result, setResult] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [videos, setVideos] = useState([])
+  // serach term
+  const [term, setTerm] = useState("")
+  // infinite scroll
+  const [isFetching, setIsFetching] = useState(false)
+  const [pageToken, setPageToken] = useState("")
 
-  // Disparar ações de busca
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!isFetching) return
+    fetchMoreVideos()
+  }, [isFetching])
+
+  useEffect(() => {
+    if (term) makeSearch(term)
+  }, [term])
+
+  function handleScroll() {
+    const scrollBottom = window.innerHeight + document.documentElement.scrollTop
+    if (scrollBottom !== document.documentElement.offsetHeight) return
+    setIsFetching(true)
+  }
+
+  // Disparar ação de busca
   async function makeSearch(term) {
     const results = await YoutubeService.fetchByTerm(term)
-    setResult(results)
-    setIsSearch(true)
+    if (!results) return
+
+    const { videos, nextPageToken } = results
+    setVideos(videos)
+    setPageToken(nextPageToken)
+    setIsLoaded(true)
+  }
+  // Buscar videos da próxima página
+  async function fetchMoreVideos() {
+    const results = await YoutubeService.fetchByTerm(term, pageToken)
+    if (!results) return
+
+    const { videos, nextPageToken } = results
+    setPageToken(nextPageToken)
+
+    setTimeout(() => {
+      setVideos(prevState => [...prevState, ...videos])
+      setIsFetching(false)
+    }, 2000)
   }
 
   return (
     <>
       <div className="home-container">
-        <div className={`search-container ${isSearch ? "active" : ""}`}>
+        <div className={`search-container ${isLoaded ? "active" : ""}`}>
           <h1 className="logo">Vearch</h1>
           <Input
             placeholder="Pesquisar"
             icon="search"
             className="search-input"
-            onClick={value => makeSearch(value)}
+            onClick={value => setTerm(value)}
           />
         </div>
         <div className="body-container">
-          {result &&
-            result.map((item, index) => (
+          {videos &&
+            videos.map((item, index) => (
               <Card
                 id={item.id}
                 key={index}
@@ -46,13 +90,11 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
-          {!result.length && isSearch && (
+          {isFetching && <div className="loading">Carregando</div>}
+          {!videos && (
             <div className="no-result">
-              <img
-                src="https://media2.giphy.com/media/14uQ3cOFteDaU/giphy.gif?cid=790b7611233668a72394af0d83182c2c479c50574f5a68fa&rid=giphy.gif"
-                alt="not found"
-              />
-              <p>Não encontramos vídeos com o termo buscado :/</p>
+              <img src={img404} alt="not found" />
+              <p>Não encontramos vídeos com o termo buscado.</p>
               <p>Utilize outras palavras-chave.</p>
             </div>
           )}

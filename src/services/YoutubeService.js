@@ -14,29 +14,37 @@ class YoutubeService {
    * @param {*} term termo à ser buscado
    * @returns {Array} videos
    */
-  async fetchByTerm(term) {
+  async fetchByTerm(term, pageToken) {
     const part = ["id", "snippet"]
 
-    const response = await this.axios.get("/search", {
-      params: {
-        part: part.join(","),
-        q: term,
-        type: "video",
-        key: this.key
-      }
-    })
-    // guarda os itens retornados na busca
-    const { items } = response.data
-    // trata os resultados do youtube
-    const videos = items
-      .map(item => VideoFactory(item, part))
-      .filter(item => !!item)
-    return videos
+    try {
+      const response = await this.axios.get("/search", {
+        params: {
+          part: part.join(","),
+          q: term,
+          type: "video",
+          key: this.key,
+          maxResults: 21,
+          pageToken: pageToken || ""
+        }
+      })
+
+      // guarda os itens retornados na busca
+      const { items, nextPageToken } = response.data
+
+      // trata os resultados do youtube
+      const videos = items
+        .map(item => VideoFactory(item, part))
+        .filter(item => !!item)
+      return { nextPageToken: nextPageToken || null, videos }
+    } catch (e) {
+      return null
+    }
   }
 
   /**
    * Busca detalhes de um vídeo a partir do seu ID
-   * @param {String} id 
+   * @param {String} id
    * @return {video}
    */
   async fetchVideoDetail(id) {
