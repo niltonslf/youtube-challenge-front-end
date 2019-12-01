@@ -5,10 +5,7 @@ import { Route, Link } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
-
 import Detail from "../Detail"
-
-import img404 from "../../assets/404.gif"
 
 import img404 from "../../assets/404.gif"
 
@@ -16,13 +13,17 @@ import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
   const [isSearch, setIsSearch] = useState(false)
-  const [result, setResult] = useState([])
+  const [videos, setVideos] = useState([])
 
   // Disparar ações de busca
   async function makeSearch(term) {
     const results = await YoutubeService.fetchByTerm(term)
-    setResult(results)
+    setVideos(results)
     setIsSearch(true)
+  }
+
+  function fetchData() {
+    console.log("LOAD MORE!!!!")
   }
 
   return (
@@ -38,8 +39,15 @@ export default function Home({ match }) {
           />
         </div>
         <div className="body-container">
-          {result &&
-            result.map((item, index) => (
+          <InfiniteScroll
+            dataLength={videos.length}
+            next={fetchData}
+            hasMore={true}
+            loader={<div>Loading...</div>}
+            endMessage={<p>You have seen it all</p>}
+          ></InfiniteScroll>
+          {videos &&
+            videos.map((item, index) => (
               <Card
                 id={item.id}
                 key={index}
@@ -50,7 +58,7 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
-          {!result && (
+          {!videos && (
             <div className="no-result">
               <img src={img404} alt="not found" />
               <p>Não encontramos vídeos com o termo buscado.</p>
