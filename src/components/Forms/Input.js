@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import "../../scss/_variables.scss"
@@ -29,10 +29,13 @@ const SearchBtn = styled.button`
   outline: none;
 `
 
-const Input = ({ placeholder, icon, onClick, className }) => {
+const Input = ({ placeholder, icon, onClick, className, val }) => {
   const [isValidated, setIsValidated] = useState(false)
-
   const [value, setValue] = useState("")
+
+  useEffect(() => {
+    setValue(val)
+  }, [val])
 
   function handleKeyPress(e) {
     if (value) {

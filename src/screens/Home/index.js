@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import "./style.scss"
 
-import { Route } from "react-router-dom"
+import { Route, useHistory } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
@@ -13,6 +13,8 @@ import img404 from "../../assets/404.gif"
 import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
+  let history = useHistory()
+
   const [isLoaded, setIsLoaded] = useState(false)
   const [videos, setVideos] = useState([])
   // serach term
@@ -27,6 +29,14 @@ export default function Home({ match }) {
   }, [])
 
   useEffect(() => {
+    const {
+      location: { search }
+    } = history
+    const urlParam = new URLSearchParams(search)
+    setTerm(urlParam.get("search"))
+  }, [])
+
+  useEffect(() => {
     if (!isFetching) return
     fetchMoreVideos()
   }, [isFetching])
@@ -35,6 +45,7 @@ export default function Home({ match }) {
     if (term) makeSearch(term)
   }, [term])
 
+  // Lidar com o scroll da página
   function handleScroll() {
     const scrollBottom = window.innerHeight + document.documentElement.scrollTop
     if (scrollBottom !== document.documentElement.offsetHeight) return
@@ -43,6 +54,8 @@ export default function Home({ match }) {
 
   // Disparar ação de busca
   async function makeSearch(term) {
+    history.push(`/?search=${term}`) // adicionar termo na url
+
     const results = await YoutubeService.fetchByTerm(term)
     if (!results) return
 
@@ -57,7 +70,7 @@ export default function Home({ match }) {
     if (!results) return
 
     const { videos, nextPageToken } = results
-    setPageToken(nextPageToken)
+    setPageToken(nextPageToken) // salva o token da próxima página
 
     setTimeout(() => {
       setVideos(prevState => [...prevState, ...videos])
@@ -65,16 +78,27 @@ export default function Home({ match }) {
     }, 2000)
   }
 
+  //
+  function backHome() {
+    history.push("/")
+    setTerm("")
+    setVideos([])
+    setIsLoaded(false)
+  }
+
   return (
     <>
       <div className="home-container">
         <div className={`search-container ${isLoaded ? "active" : ""}`}>
-          <h1 className="logo">Vearch</h1>
+          <h1 className="logo" onClick={backHome}>
+            Vearch
+          </h1>
           <Input
             placeholder="Pesquisar"
-            icon="search"
+            icon={!term ? "search" : "close"}
             className="search-input"
-            onClick={value => setTerm(value)}
+            val={term}
+            onClick={value => (!term ? setTerm(value) : backHome())}
           />
         </div>
         <div className="body-container">
@@ -90,7 +114,6 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
-          {isFetching && <div className="loading">Carregando</div>}
           {!videos && (
             <div className="no-result">
               <img src={img404} alt="not found" />
@@ -99,6 +122,7 @@ export default function Home({ match }) {
             </div>
           )}
         </div>
+        {isFetching && <div className="loading">Carregando</div>}
       </div>
       <Route path="/video/:id" component={Detail} />
     </>
