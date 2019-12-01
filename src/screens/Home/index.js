@@ -8,6 +8,10 @@ import Card from "../../components/Card"
 
 import Detail from "../Detail"
 
+import img404 from "../../assets/404.gif"
+
+import img404 from "../../assets/404.gif"
+
 import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
@@ -48,10 +52,7 @@ export default function Home({ match }) {
             ))}
           {!result && (
             <div className="no-result">
-              <img
-                src="https://media2.giphy.com/media/14uQ3cOFteDaU/giphy.gif?cid=790b7611233668a72394af0d83182c2c479c50574f5a68fa&rid=giphy.gif"
-                alt="not found"
-              />
+              <img src={img404} alt="not found" />
               <p>Não encontramos vídeos com o termo buscado.</p>
               <p>Utilize outras palavras-chave.</p>
             </div>
