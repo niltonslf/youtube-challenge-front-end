@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react"
 import "./style.scss"
 
@@ -12,66 +13,68 @@ import img404 from "../../assets/404.gif"
 import YoutubeService from "../../services/YoutubeService"
 
 export default function Home({ match }) {
-  const [isSearch, setIsSearch] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [searchResult, setSearchResult] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
   const [videos, setVideos] = useState([])
+  // serach term
+  const [term, setTerm] = useState("")
+  // infinite scroll
+  const [isFetching, setIsFetching] = useState(false)
+  const [pageToken, setPageToken] = useState("")
 
   useEffect(() => {
-    if (searchResult) {
-      setVideos([...videos, ...searchResult])
-    } else {
-      setVideos(null)
-    }
-    setIsLoading(false)
-  }, [searchResult]) // eslint-disable-line
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!isFetching) return
+    fetchMoreVideos()
+  }, [isFetching])
+
+  useEffect(() => {
+    if (term) makeSearch(term)
+  }, [term])
+
+  function handleScroll() {
+    const scrollBottom = window.innerHeight + document.documentElement.scrollTop
+    if (scrollBottom !== document.documentElement.offsetHeight) return
+    setIsFetching(true)
+  }
 
   // Disparar ação de busca
   async function makeSearch(term) {
-    setIsLoading(true)
     const results = await YoutubeService.fetchByTerm(term)
+    if (!results) return
 
-    if (results) {
-      const { videos } = results
-      setSearchResult(videos)
-      setIsSearch(true)
-      return
-    }
-    // console.log("erro")
-    setSearchResult(null)
-    setIsSearch(true)
+    const { videos, nextPageToken } = results
+    setVideos(videos)
+    setPageToken(nextPageToken)
+    setIsLoaded(true)
   }
+  // Buscar videos da próxima página
+  async function fetchMoreVideos() {
+    const results = await YoutubeService.fetchByTerm(term, pageToken)
+    if (!results) return
 
-  function listenPageScroll(event) {
-    const homeContainer = event.target
-    const homeHeight = homeContainer.scrollHeight
+    const { videos, nextPageToken } = results
+    setPageToken(nextPageToken)
 
-    homeContainer.addEventListener("scroll", () => {
-      const posY = homeContainer.scrollTop
-      const scrollHeight = homeContainer.clientHeight
-      const scrollBottomPos = posY + scrollHeight
-
-      console.log("listener", { isLoading })
-
-      if (!isLoading) {
-        if (scrollBottomPos >= homeHeight) {
-          console.log("load more")
-          makeSearch("violão")
-        }
-      }
-    })
+    setTimeout(() => {
+      setVideos(prevState => [...prevState, ...videos])
+      setIsFetching(false)
+    }, 2000)
   }
 
   return (
     <>
-      <div className="home-container" onScroll={listenPageScroll}>
-        <div className={`search-container ${isSearch ? "active" : ""}`}>
+      <div className="home-container">
+        <div className={`search-container ${isLoaded ? "active" : ""}`}>
           <h1 className="logo">Vearch</h1>
           <Input
             placeholder="Pesquisar"
             icon="search"
             className="search-input"
-            onClick={value => makeSearch(value)}
+            onClick={value => setTerm(value)}
           />
         </div>
         <div className="body-container">
@@ -87,6 +90,7 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
+          {isFetching && <div className="loading">Carregando</div>}
           {!videos && (
             <div className="no-result">
               <img src={img404} alt="not found" />
