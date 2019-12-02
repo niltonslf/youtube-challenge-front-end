@@ -47,8 +47,9 @@ export default function Home({ match }) {
 
   // Lidar com o scroll da página
   function handleScroll() {
-    const scrollBottom = window.innerHeight + document.documentElement.scrollTop
-    if (scrollBottom !== document.documentElement.offsetHeight) return
+    const homeContainer = document.querySelector(".home-container")
+    const scrollBottom = homeContainer.clientHeight + homeContainer.scrollTop
+    if (scrollBottom !== homeContainer.offsetHeight) return
     setIsFetching(true)
   }
 
