@@ -10,7 +10,6 @@ export default function Detail({ match }) {
   const { params } = match
   const [video, setVideo] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [leavePage, setLeavePage] = useState(false)
 
   useEffect(() => {
     async function fetchVideo(id) {
@@ -22,7 +21,6 @@ export default function Detail({ match }) {
   }, [params])
 
   function handleLeavePage() {
-    setLeavePage(true)
     history.goBack(1)
   }
 
