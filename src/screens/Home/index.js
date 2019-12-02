@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import "./style.scss"
 
-import { Route, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
@@ -115,18 +115,16 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
-        </div>
-        {!videos.length && term && (
-          <div className="no-result">
-            <img src={img404} alt="not found" />
-            <p>Não encontramos vídeos com o termo buscado.</p>
-            <p>Utilize outras palavras-chave.</p>
-          </div>
-        )}
+          {!videos && (
+            <div className="no-result">
+              <img src={img404} alt="not found" />
+              <p>Não encontramos vídeos com o termo buscado.</p>
+              <p>Utilize outras palavras-chave.</p>
+            </div>
+          )}
         </div>
         {isFetching && <div className="loading">Carregando</div>}
       </div>
-      <Route path="/video/:id" component={Detail} />
     </>
   )
 }

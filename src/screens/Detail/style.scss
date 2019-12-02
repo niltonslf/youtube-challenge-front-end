@@ -30,7 +30,7 @@
 @keyframes enter-page {
     from {
         height: 0;
-        top: 30vh;
+        top: 10vh;
     }
     to {
         top: 0;
@@ -44,7 +44,7 @@
         height: 100vh;
     }
     to {
-        top: 50vh;
+        top: 10vh;
         height: 0;
     }
 }
