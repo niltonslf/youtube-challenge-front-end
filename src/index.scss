@@ -5,6 +5,7 @@
   padding: 0;
   list-style: none;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 html,
@@ -14,4 +15,12 @@ input {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
 }

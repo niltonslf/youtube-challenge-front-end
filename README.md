@@ -1,68 +1,81 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center">Vearch - Vídeo search</h3>
 
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/niltonslf/youtube-challenge-front-end.svg)](https://github.com/niltonslf/youtube-challenge-front-end/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/niltonslf/youtube-challenge-front-end.svg)](https://github.com/niltonslf/youtube-challenge-front-end/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-### `yarn start`
+</div>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<p align="center"> Aplicação desenvolvida para consumir a api do youtube.
+    <br> 
+</p>
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📝 Table of Contents
 
-### `yarn build`
+- [About](#about)
+- [Deployment](#deployment)
+- [Built Using](#built_using)
+- [Authors](#authors)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧐 About <a name = "about"></a>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Vearch (video + search) is a reacjs app developed as a Front End vacancy Challenge.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[See demo version](https://vearch.netlify.com/)
 
-### `yarn eject`
+## 📷 Screensot
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![demo](./demo.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🚀 Deployment <a name = "deployment"></a>
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Prerequisites
 
-## Learn More
+You will need to have ```yarn``` or ```npm``` installed.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Running as development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. inside project folder run: 
+    ```
+    yarn install
+    or
+    npm install
+    ```
+2. duplicate .env.production file and renames to .env.local
+3. Add youtube api key to variable REACT_APP_YT_KEY. You can generate one [here](https://developers.google.com/youtube/v3/getting-started?hl=pt-br)
+4. It's done! Now you can run the following command to start development server:
+      ```
+        yarn start
+        or
+        npm run start
+      ```
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Running as production
 
-### Analyzing the Bundle Size
+To production version ignore step 2 and change step 4 with: ``yarn build `` instead ``yarn start``. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
+## 🔧 Running the tests <a name = "tests"></a>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+  Nothing here yet 😭
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Deployment
+## ⛏️ Built Using <a name = "built_using"></a>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- [Reactjs](https://pt-br.reactjs.org/) - Front-end library
+- [axios](https://github.com/axios/axios) - HTTP Requests
+- [Youtube](https://developers.google.com/youtube/v3) - Youtube v3 API
 
-### `yarn build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## ✍️ Authors <a name = "authors"></a>
+
+- [@niltonslf](https://github.com/niltonslf) - Developer
