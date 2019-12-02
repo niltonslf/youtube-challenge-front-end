@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
-import Detail from "../Detail"
 
 import img404 from "../../assets/404.gif"
 
@@ -96,10 +95,10 @@ export default function Home({ match }) {
           </h1>
           <Input
             placeholder="Pesquisar"
-            icon={!term ? "search" : "close"}
+            icon="search"
             className="search-input"
-            val={term}
-            onClick={value => (!term ? setTerm(value) : backHome())}
+            val={term || ""}
+            onClick={value => setTerm(value)}
           />
         </div>
         <div className="body-container">
