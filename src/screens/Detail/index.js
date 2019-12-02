@@ -10,7 +10,6 @@ export default function Detail({ match }) {
   const { params } = match
   const [video, setVideo] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [leavePage, setLeavePage] = useState(false)
 
   useEffect(() => {
     async function fetchVideo(id) {
@@ -22,17 +21,14 @@ export default function Detail({ match }) {
   }, [params])
 
   function handleLeavePage() {
-    setLeavePage(true)
-    setTimeout(() => {
-      history.push("/")
-    }, 500)
+    history.goBack(1)
   }
 
   return (
     <section
-      className={`detail-container ${isLoading ? "detail-animation-enter" : ""}
-      ${leavePage ? "detail-animation-leave" : ""}
-      `}
+      className={`detail-container ${
+        isLoading ? "detail-animation-enter" : ""
+      }`}
     >
       <SkeletonTheme color="#ffffff" highlightColor="#efefef">
         <div className="detail-header">

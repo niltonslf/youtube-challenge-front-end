@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from "react"
 import "./style.scss"
 
-import { Route, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import Input from "../../components/Forms/Input"
 import Card from "../../components/Card"
-import Detail from "../Detail"
 
 import img404 from "../../assets/404.gif"
 
@@ -47,8 +46,9 @@ export default function Home({ match }) {
 
   // Lidar com o scroll da página
   function handleScroll() {
-    const scrollBottom = window.innerHeight + document.documentElement.scrollTop
-    if (scrollBottom !== document.documentElement.offsetHeight) return
+    const homeContainer = document.querySelector(".home-container")
+    const scrollBottom = homeContainer.clientHeight + homeContainer.scrollTop
+    if (scrollBottom !== homeContainer.offsetHeight) return
     setIsFetching(true)
   }
 
@@ -95,10 +95,10 @@ export default function Home({ match }) {
           </h1>
           <Input
             placeholder="Pesquisar"
-            icon={!term ? "search" : "close"}
+            icon="search"
             className="search-input"
-            val={term}
-            onClick={value => (!term ? setTerm(value) : backHome())}
+            val={term || ""}
+            onClick={value => setTerm(value)}
           />
         </div>
         <div className="body-container">
@@ -124,7 +124,6 @@ export default function Home({ match }) {
         </div>
         {isFetching && <div className="loading">Carregando</div>}
       </div>
-      <Route path="/video/:id" component={Detail} />
     </>
   )
 }
