@@ -15,35 +15,32 @@
     <br> 
 </p>
 
+
 ## 📝 Table of Contents
 
 - [About](#about)
-- [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Built Using](#built_using)
 - [Authors](#authors)
 
 ## 🧐 About <a name = "about"></a>
 
-Vearch is a reacjs app developed as a Front End vacancy Challenge.
+Vearch (video + search) is a reacjs app developed as a Front End vacancy Challenge.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+[See demo version](https://vearch.netlify.com/)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+## 📷 Screensot
+
+![demo](./demo.png)
+
+## 🚀 Deployment <a name = "deployment"></a>
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-
-```
-yarn or npm
-```
+You will need to have ```yarn``` or ```npm``` installed.
 
 ### Running as development
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
 
 1. inside project folder run: 
     ```
@@ -61,33 +58,16 @@ Say what the step will be
       ```
 
 
+### Running as production
+
+To production version ignore step 2 and change step 4 with: ``yarn build `` instead ``yarn start``. 
 
 
-End with an example of getting some data out of the system or using it for a little demo.
+## 🔧 Running the tests <a name = "tests"></a>
 
-<!-- ## 🔧 Running the tests <a name = "tests"></a>
+  Nothing here yet 😭
 
-Explain how to run the automated tests for this system.
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-``` -->
-
-<!-- ## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system. -->
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
@@ -99,6 +79,3 @@ Add additional notes about how to deploy this on a live system. -->
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@niltonslf](https://github.com/niltonslf) - Developer
-
-See also the list of [contributors](https://github.com/niltonslf/youtube-challenge-front-end/contributors) who participated in this project.
-
