@@ -57,28 +57,28 @@ export default function Home({ match }) {
     history.push(`/?search=${term}`) // adicionar termo na url
 
     const results = await YoutubeService.fetchByTerm(term)
-    if (!results) return
-
-    const { videos, nextPageToken } = results
-    setVideos(videos)
-    setPageToken(nextPageToken)
+    if (results) {
+      const { videos, nextPageToken } = results
+      setVideos(videos)
+      setPageToken(nextPageToken)
+    }
     setIsLoaded(true)
   }
   // Buscar videos da próxima página
   async function fetchMoreVideos() {
     const results = await YoutubeService.fetchByTerm(term, pageToken)
-    if (!results) return
+    if (results) {
+      const { videos, nextPageToken } = results
+      setPageToken(nextPageToken) // salva o token da próxima página
 
-    const { videos, nextPageToken } = results
-    setPageToken(nextPageToken) // salva o token da próxima página
-
-    setTimeout(() => {
-      setVideos(prevState => [...prevState, ...videos])
-      setIsFetching(false)
-    }, 2000)
+      setTimeout(() => {
+        setVideos(prevState => [...prevState, ...videos])
+        setIsFetching(false)
+      }, 2000)
+    }
+    setIsLoaded(true)
   }
 
-  //
   function backHome() {
     history.push("/")
     setTerm("")
@@ -116,7 +116,7 @@ export default function Home({ match }) {
             ))}
         </div>
         {isFetching && <div className="loading">Carregando</div>}
-        {!videos.length && (
+        {!videos.length && term && isLoaded && (
           <div className="no-result">
             <img src={img404} alt="not found" />
             <p>Não encontramos vídeos com o termo buscado.</p>
