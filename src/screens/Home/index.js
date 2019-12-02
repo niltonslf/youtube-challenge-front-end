@@ -115,13 +115,14 @@ export default function Home({ match }) {
                 {item.description}
               </Card>
             ))}
-          {!videos && (
-            <div className="no-result">
-              <img src={img404} alt="not found" />
-              <p>Não encontramos vídeos com o termo buscado.</p>
-              <p>Utilize outras palavras-chave.</p>
-            </div>
-          )}
+        </div>
+        {!videos.length && term && (
+          <div className="no-result">
+            <img src={img404} alt="not found" />
+            <p>Não encontramos vídeos com o termo buscado.</p>
+            <p>Utilize outras palavras-chave.</p>
+          </div>
+        )}
         </div>
         {isFetching && <div className="loading">Carregando</div>}
       </div>

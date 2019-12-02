@@ -97,7 +97,9 @@
 }
 
 .no-result {
-  width: 100%;
+  width: 600px;
+  max-width: 100%;
+  margin: 0 auto;
   
   grid-column-end: 2;
   grid-column-start: 2;
